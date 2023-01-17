@@ -1,20 +1,20 @@
 <div
-  class="flex justify-center items-center fixed w-full h-full bg-white font-sans p-8"
+  class="flex justify-center items-center fixed w-full h-full bg-white font-sans p-4"
 >
   <div class="flex flex-col gap-8 bg-blue-500 text-white w-full max-w-md p-4">
     <div class="font-bold text-4xl">Swypper</div>
     <div>
-      Welcome to <span class="text-yellow-300 font-bold">Swypper</span>, the app
-      for perfectionists <i class="fa-solid fa-gem text-blue-200"></i> who want
-      to have everything under control. Swypper is free forever
-      <i class="fa-solid fa-money-bill text-green-300"></i> and can be used for
-      comercial purposes.
+      Welcome to
+      <span class="text-yellow-300 font-bold">Swypper</span>, the app for
+      perfectionists who want to have everything under control. It's free
+      forever <i class="fa-solid fa-money-bill text-green-300"></i> and can be
+      used for comercial purposes.
     </div>
     <div class="flex flex-col gap-4">
       <app-button (click)="handleSignInWithGoogle()"
         >Sign in with Google <i class="fa-brands fa-google"></i
       ></app-button>
-      <app-button [variant]="'secondary'" (click)="handleSignInWithFacebook()"
+      <app-button variant="secondary" (click)="handleSignInWithFacebook()"
         >Sign in with Facebook <i class="fa-brands fa-facebook"></i
       ></app-button>
     </div>

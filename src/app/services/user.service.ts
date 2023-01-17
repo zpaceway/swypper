@@ -1,34 +1,25 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Unsubscribe, User } from 'firebase/auth';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { auth } from 'src/firebase';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService implements OnDestroy {
-  user?: User | null;
+  firebaseUser: BehaviorSubject<User | null | undefined> = new BehaviorSubject<
+    User | null | undefined
+  >(undefined);
   unsubscribe: Unsubscribe;
   isAuthenticated: boolean = false;
 
   constructor() {
-    this.unsubscribe = auth.onAuthStateChanged((user) => {
-      this.user = user;
+    this.unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+      this.firebaseUser.next(firebaseUser);
     });
   }
 
   ngOnDestroy() {
     this.unsubscribe();
-  }
-
-  async getUser() {
-    await new Promise((res, rej) => {
-      const interval = setInterval(() => {
-        if (this.user !== undefined) {
-          clearInterval(interval);
-          res(null);
-        }
-      }, 500);
-    });
-    return this.user;
   }
 }

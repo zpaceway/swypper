@@ -12,8 +12,16 @@ import { UserService } from '../services/user.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return !!(await this.userService.getUser());
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return new Observable<boolean>((observable) =>
+      this.userService.firebaseUser.subscribe({
+        next: (firebaseUser) => {
+          if (firebaseUser !== undefined) {
+            observable.next(!!firebaseUser);
+          }
+        },
+      })
+    );
   }
 
   constructor(private userService: UserService) {

@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './routes/auth/auth.component';
 import { ButtonComponent } from './components/shared/button/button.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
+import { TodoCardComponent } from './components/dashboard/todo-card/todo-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     ButtonComponent,
-    DashboardComponent
+    DashboardComponent,
+    TodoCardComponent
   ],
   imports: [
     BrowserModule,
