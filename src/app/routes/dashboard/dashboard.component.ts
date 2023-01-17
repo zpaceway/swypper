@@ -1,14 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { format } from 'date-fns';
 import { User } from 'firebase/auth';
+import TodoItem from 'src/interfaces/TodoItem';
 import { UserService } from 'src/app/services/user.service';
-
-interface TodoItem {
-  id: string;
-  title: string;
-  description: string;
-  checked: boolean;
-}
+import UserData from 'src/interfaces/UserData';
+import { updateTodoItem } from 'src/firebase/db/todoItems';
+import { signOut } from 'src/firebase/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,47 +15,41 @@ interface TodoItem {
 })
 export class DashboardComponent {
   user?: User | null;
+  userData: UserData | null = null;
   now: Date = new Date();
-  todoItems: TodoItem[] = [
-    {
-      id: '1',
-      title: 'Work',
-      description: "Don't forget to work! Check this when done",
-      checked: true,
-    },
-    {
-      id: '2',
-      title: 'Learn Angular',
-      description: 'Always learn angular',
-      checked: false,
-    },
-    {
-      id: '3',
-      title: 'Sleep',
-      description: 'Take some time to rest',
-      checked: true,
-    },
-  ];
+  todoItems: TodoItem[] = [];
+  showAddTodoItemMenu: boolean = false;
 
-  constructor(private userService: UserService) {
-    this.userService = userService;
-    userService.firebaseUser.subscribe({
-      next: (firebaseUser) => {
-        this.user = firebaseUser;
-      },
-    });
+  constructor(private userService: UserService, private router: Router) {
+    this.user = this.userService.firebaseUser;
+    this.userData = this.userService.userData;
+    this.todoItems = this.userService.todoItems;
   }
 
   getFormattedDate() {
     return `${format(this.now, 'EEEE,')}\n${format(this.now, 'dd MMMM')}`;
   }
 
-  toggleItem(todoItemId: string) {
-    this.todoItems = this.todoItems.map((todoItem) => {
-      if (todoItemId === todoItem.id) {
-        todoItem.checked = !todoItem.checked;
-      }
-      return todoItem;
-    });
+  async toggleItem(todoItemId: string) {
+    this.todoItems = await Promise.all(
+      this.todoItems.map(async (todoItem) => {
+        if (todoItemId === todoItem.id) {
+          todoItem.checked = !todoItem.checked;
+          await updateTodoItem(this.user!.uid, todoItem.id, {
+            checked: todoItem.checked,
+          });
+        }
+        return todoItem;
+      })
+    );
+  }
+
+  async signOutUser() {
+    await signOut();
+    await this.router.navigate(['auth']);
+  }
+
+  async toggleShowAddTodoItemMenu() {
+    this.showAddTodoItemMenu = !this.showAddTodoItemMenu;
   }
 }

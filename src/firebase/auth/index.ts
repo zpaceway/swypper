@@ -15,4 +15,8 @@ const signInWithFacebook = () => {
   return signInWithPopup(auth, provider);
 };
 
-export { signInWithGoogle, signInWithFacebook };
+const signOut = () => {
+  return auth.signOut();
+};
+
+export { signInWithGoogle, signInWithFacebook, signOut };

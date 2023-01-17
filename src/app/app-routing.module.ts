@@ -5,6 +5,7 @@ import { AuthComponent } from './routes/auth/auth.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { component: AuthComponent, path: 'auth' },
   {
     component: DashboardComponent,

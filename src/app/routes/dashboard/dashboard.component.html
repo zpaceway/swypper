@@ -1,13 +1,19 @@
 <div
-  class="fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center"
+  class="fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-gray-100"
 >
   <div
-    class="flex flex-col justify-end max-w-lg w-full h-full bg-blue-500 border-x border-gray-300"
+    class="relative flex flex-col justify-end max-w-lg w-full h-full bg-blue-500 border-gray-300"
   >
     <div
-      class="flex flex-col justify-center w-full h-60 p-4 gap-4 text-white font-bold"
+      class="flex flex-col justify-center w-full h-52 p-4 gap-4 text-white font-bold"
     >
-      <div class="text-2xl">Hi, {{ user?.displayName }}</div>
+      <div class="text-2xl">
+        Hi, {{ userData?.name }}
+        <i
+          class="fa-solid fa-right-from-bracket cursor-pointer"
+          (click)="signOutUser()"
+        ></i>
+      </div>
       <div class="text-4xl whitespace-pre">
         {{ getFormattedDate() }}
       </div>
@@ -18,8 +24,30 @@
           [title]="todoItem.title"
           [description]="todoItem.description"
           [checked]="todoItem.checked"
-          (click)="toggleItem(todoItem.id)"
+          (onClick)="toggleItem(todoItem.id)"
+          [fontAwesomeIcon]="todoItem.fontAwesomeIcon"
         ></app-todo-card>
+      </div>
+    </div>
+    <div
+      *ngIf="!showAddTodoItemMenu"
+      class="absolute bottom-10 left-0 right-0 flex justify-center items-center"
+    >
+      <app-button (click)="toggleShowAddTodoItemMenu()">+</app-button>
+    </div>
+    <div
+      class="absolute left-0 right-0 h-60 bg-white z-10 border-t border-t-gray-300"
+      *ngIf="showAddTodoItemMenu"
+    >
+      <div class="w-full h-full relative">
+        <div
+          class="absolute -top-4 right-4 w-12 h-12 flex justify-center items-center bg-white rounded-full"
+        >
+          <i
+            class="fa-sharp fa-solid fa-circle-xmark text-rose-400 text-4xl rounded-full cursor-pointer"
+            (click)="toggleShowAddTodoItemMenu()"
+          ></i>
+        </div>
       </div>
     </div>
   </div>
