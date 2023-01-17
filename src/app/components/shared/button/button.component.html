@@ -1,0 +1,26 @@
+<div
+  class="wrapper relative cursor-pointer"
+  [ngClass]="{
+    'inline-flex': !fullWidth,
+    flex: fullWidth
+  }"
+>
+  <div
+    class="absolute w-full h-full -right-1.5 -bottom-1.5"
+    [ngClass]="{
+      'bg-blue-700': variant === 'primary',
+      'bg-yellow-300': variant === 'secondary'
+    }"
+  ></div>
+  <div
+    class="w-full h-full px-4 py-2 font-bold text-gray-600 z-10"
+    [ngClass]="{
+      'bg-yellow-300': variant === 'primary',
+      'bg-blue-700': variant === 'secondary',
+      'text-gray-600': variant === 'primary',
+      'text-white': variant === 'secondary'
+    }"
+  >
+    <ng-content></ng-content>
+  </div>
+</div>
