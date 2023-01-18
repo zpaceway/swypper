@@ -10,9 +10,9 @@ export class TodoCardComponent {
   @Input() description: string = '';
   @Input() fontAwesomeIcon: string = '';
   @Input() checked: boolean = false;
-  @Output() onClick: EventEmitter<void> = new EventEmitter();
+  @Output() toggle: EventEmitter<void> = new EventEmitter();
 
-  toggleItem() {
-    this.onClick.emit();
+  onToggle() {
+    this.toggle.emit();
   }
 }

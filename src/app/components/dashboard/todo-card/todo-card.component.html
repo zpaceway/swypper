@@ -20,7 +20,7 @@
     </div>
   </div>
   <app-button
-    (click)="toggleItem()"
+    (click)="onToggle()"
     [variant]="checked ? 'secondary' : 'primary'"
   >
     <div *ngIf="!checked">

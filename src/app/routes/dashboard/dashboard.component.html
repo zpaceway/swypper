@@ -1,6 +1,4 @@
-<div
-  class="fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-gray-100"
->
+<div class="fixed inset-0 flex justify-center items-center bg-gray-100">
   <div
     class="relative flex flex-col justify-end max-w-lg w-full h-full bg-blue-500 border-gray-300"
   >
@@ -24,7 +22,7 @@
           [title]="todoItem.title"
           [description]="todoItem.description"
           [checked]="todoItem.checked"
-          (onClick)="toggleItem(todoItem.id)"
+          (toggle)="toggleItem(todoItem.id)"
           [fontAwesomeIcon]="todoItem.fontAwesomeIcon"
         ></app-todo-card>
       </div>
@@ -35,20 +33,10 @@
     >
       <app-button (click)="toggleShowAddTodoItemMenu()">+</app-button>
     </div>
-    <div
+    <app-add-new-todo-item
       class="absolute left-0 right-0 h-60 bg-white z-10 border-t border-t-gray-300"
       *ngIf="showAddTodoItemMenu"
-    >
-      <div class="w-full h-full relative">
-        <div
-          class="absolute -top-4 right-4 w-12 h-12 flex justify-center items-center bg-white rounded-full"
-        >
-          <i
-            class="fa-sharp fa-solid fa-circle-xmark text-rose-400 text-4xl rounded-full cursor-pointer"
-            (click)="toggleShowAddTodoItemMenu()"
-          ></i>
-        </div>
-      </div>
-    </div>
+      (cancel)="toggleShowAddTodoItemMenu()"
+    ></app-add-new-todo-item>
   </div>
 </div>

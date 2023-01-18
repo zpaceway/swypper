@@ -7,6 +7,7 @@ import { AuthComponent } from './routes/auth/auth.component';
 import { ButtonComponent } from './components/shared/button/button.component';
 import { DashboardComponent } from './routes/dashboard/dashboard.component';
 import { TodoCardComponent } from './components/dashboard/todo-card/todo-card.component';
+import { AddNewTodoItemComponent } from './components/dashboard/add-new-todo-item/add-new-todo-item.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TodoCardComponent } from './components/dashboard/todo-card/todo-card.co
     AuthComponent,
     ButtonComponent,
     DashboardComponent,
-    TodoCardComponent
+    TodoCardComponent,
+    AddNewTodoItemComponent
   ],
   imports: [
     BrowserModule,
