@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { format } from 'date-fns';
 import { User } from 'firebase/auth';
 import Task from 'src/interfaces/Task';
@@ -20,7 +20,11 @@ export class DashboardComponent {
   tasks: Task[] = [];
   showAddTaskMenu: boolean = false;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
     this.user = this.userService.firebaseUser;
     this.userData = this.userService.userData;
     this.tasks = this.userService.tasks;
@@ -51,6 +55,7 @@ export class DashboardComponent {
 
   async toggleShowAddTaskMenu() {
     this.showAddTaskMenu = !this.showAddTaskMenu;
+    this.changeDetectorRef.detectChanges();
   }
 
   async onAdd(task: Omit<Task, 'id'>) {
