@@ -1,0 +1,20 @@
+<div class="w-full h-full relative p-4 flex items-end justify-between flex-col">
+  <div class="w-full flex flex-col gap-1">
+    <app-input placeholder="Title" label="Title" [(value)]="title"></app-input>
+    <app-input
+      placeholder="Description"
+      label="Description"
+      [(value)]="description"
+    ></app-input>
+    <app-select label="Type" class="w-full" [(value)]="type">
+      <option value="daily">Daily</option>
+      <option value="standalone">Standalone</option>
+    </app-select>
+    <app-select label="Category" class="w-full" [(value)]="category">
+      <option value="work">Work</option>
+      <option value="live">Live</option>
+      <option value="gaming">Gaming</option>
+    </app-select>
+  </div>
+  <app-button (click)="onAdd()">Add</app-button>
+</div>

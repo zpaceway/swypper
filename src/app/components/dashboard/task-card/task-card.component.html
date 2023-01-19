@@ -1,0 +1,33 @@
+<div class="flex items-center justify-between w-full">
+  <div class="flex gap-6">
+    <div
+      class="flex relative text-2xl justify-center items-center min-h-[3rem] min-w-[3rem] max-w-[3rem] max-h-[3rem] text-white"
+    >
+      <div
+        class="absolute w-full h-full bg-blue-700 -right-1.5 -bottom-1.5"
+      ></div>
+      <div
+        class="flex w-full h-full justify-center items-center z-10 bg-blue-500"
+      >
+        <fa-icon [icon]="icons[task.category]"></fa-icon>
+      </div>
+    </div>
+    <div class="text-gray-500 flex flex-col min-w-[70%] max-w-[70%]">
+      <div class="text-xl font-bold">{{ task.title }}</div>
+      <div class="text-sm">
+        {{ task.description }}
+      </div>
+    </div>
+  </div>
+  <app-button
+    (click)="onToggle()"
+    [variant]="task.checked ? 'secondary' : 'primary'"
+  >
+    <div *ngIf="!task.checked">
+      <i class="fa-solid fa-circle-check text-green-600"></i>
+    </div>
+    <div *ngIf="task.checked">
+      <i class="fa-sharp fa-solid fa-circle-xmark text-yellow-300"></i>
+    </div>
+  </app-button>
+</div>

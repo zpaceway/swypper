@@ -1,9 +1,9 @@
 <div class="fixed inset-0 flex justify-center items-center bg-gray-100">
   <div
-    class="relative flex flex-col justify-end max-w-lg w-full h-full bg-blue-500 border-gray-300"
+    class="relative flex flex-col justify-end max-w-lg w-full h-full border-gray-300"
   >
     <div
-      class="flex flex-col justify-center w-full h-52 p-4 gap-4 text-white font-bold"
+      class="flex flex-col justify-center w-full h-52 p-4 gap-4 text-white bg-blue-500 font-bold"
     >
       <div class="text-2xl">
         Hi, {{ userData?.name }}
@@ -16,27 +16,42 @@
         {{ getFormattedDate() }}
       </div>
     </div>
-    <div class="flex flex-col p-4 h-full bg-white w-full gap-6">
-      <div *ngFor="let todoItem of todoItems">
-        <app-todo-card
-          [title]="todoItem.title"
-          [description]="todoItem.description"
-          [checked]="todoItem.checked"
-          (toggle)="toggleItem(todoItem.id)"
-          [fontAwesomeIcon]="todoItem.fontAwesomeIcon"
-        ></app-todo-card>
+    <div
+      class="flex flex-col p-4 h-full bg-white w-full gap-6 overflow-y-auto"
+      [ngClass]="{
+        'brightness-50': showAddTaskMenu,
+        'pointer-events-none': showAddTaskMenu,
+        'transition-all': showAddTaskMenu,
+        'transition-none': !showAddTaskMenu
+      }"
+    >
+      <div *ngFor="let task of tasks">
+        <app-task-card
+          [task]="task"
+          (toggle)="toggleItem(task.id)"
+        ></app-task-card>
       </div>
     </div>
-    <div
-      *ngIf="!showAddTodoItemMenu"
-      class="absolute bottom-10 left-0 right-0 flex justify-center items-center"
-    >
-      <app-button (click)="toggleShowAddTodoItemMenu()">+</app-button>
+    <div class="relative p-4 flex justify-center items-center bg-blue-500">
+      <app-add-new-task
+        class="absolute inset-x-0 h-96 -top-96 bg-white z-10"
+        *ngIf="showAddTaskMenu"
+        (cancel)="toggleShowAddTaskMenu()"
+        (add)="onAdd($event)"
+      ></app-add-new-task>
+      <app-button
+        (click)="toggleShowAddTaskMenu()"
+        [variant]="!showAddTaskMenu ? 'primary' : 'secondary'"
+      >
+        <i
+          *ngIf="!showAddTaskMenu"
+          class="fa-solid fa-circle-plus text-green-600"
+        ></i>
+        <i
+          *ngIf="showAddTaskMenu"
+          class="fa-solid fa-circle-xmark text-yellow-300"
+        ></i>
+      </app-button>
     </div>
-    <app-add-new-todo-item
-      class="absolute left-0 right-0 h-60 bg-white z-10 border-t border-t-gray-300"
-      *ngIf="showAddTodoItemMenu"
-      (cancel)="toggleShowAddTodoItemMenu()"
-    ></app-add-new-todo-item>
   </div>
 </div>

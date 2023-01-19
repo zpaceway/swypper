@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TodoCardComponent } from './todo-card.component';
+import { SelectComponent } from './select.component';
 
-describe('TodoCardComponent', () => {
-  let component: TodoCardComponent;
-  let fixture: ComponentFixture<TodoCardComponent>;
+describe('SelectComponent', () => {
+  let component: SelectComponent;
+  let fixture: ComponentFixture<SelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TodoCardComponent ]
+      declarations: [ SelectComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TodoCardComponent);
+    fixture = TestBed.createComponent(SelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

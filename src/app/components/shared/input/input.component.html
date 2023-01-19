@@ -1,0 +1,18 @@
+<div class="flex flex-col gap-1">
+  <label
+    *ngIf="label"
+    for="first_name"
+    class="block text-sm font-medium text-gray-900 dark:text-white"
+    >{{ label }}</label
+  >
+
+  <input
+    type="text"
+    id="first_name"
+    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 focus:outline-0"
+    placeholder="{{ placeholder }}"
+    required
+    [value]="value"
+    (input)="updateValue($event)"
+  />
+</div>

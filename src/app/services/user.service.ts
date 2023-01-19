@@ -2,9 +2,9 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Unsubscribe, User } from 'firebase/auth';
 import { Subject } from 'rxjs';
 import { auth } from 'src/firebase';
-import { getTodoItemsByUserId } from 'src/firebase/db/todoItems';
+import { getTasksByUserId } from 'src/firebase/db/tasks';
 import { getOrCreateUserData } from 'src/firebase/db/users';
-import TodoItem from 'src/interfaces/TodoItem';
+import Task from 'src/interfaces/Task';
 import UserData from 'src/interfaces/UserData';
 
 @Injectable({
@@ -17,14 +17,14 @@ export class UserService implements OnDestroy {
   firebaseUser?: User | null;
   unsubscribe: Unsubscribe;
   userData: UserData | null = null;
-  todoItems: TodoItem[] = [];
+  tasks: Task[] = [];
   isAuthenticated: boolean = false;
 
   constructor() {
     this.unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
-      [this.userData, this.todoItems] = await Promise.all([
+      [this.userData, this.tasks] = await Promise.all([
         await getOrCreateUserData(firebaseUser),
-        await getTodoItemsByUserId(firebaseUser?.uid),
+        await getTasksByUserId(firebaseUser?.uid),
       ]);
       this.firebaseUser = firebaseUser;
       this.firebaseUser$.next(firebaseUser);

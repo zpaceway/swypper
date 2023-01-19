@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { format } from 'date-fns';
 import { User } from 'firebase/auth';
-import TodoItem from 'src/interfaces/TodoItem';
+import Task from 'src/interfaces/Task';
 import { UserService } from 'src/app/services/user.service';
 import UserData from 'src/interfaces/UserData';
-import { updateTodoItem } from 'src/firebase/db/todoItems';
+import { createTask, updateTask } from 'src/firebase/db/tasks';
 import { signOut } from 'src/firebase/auth';
 import { Router } from '@angular/router';
 
@@ -17,29 +17,29 @@ export class DashboardComponent {
   user?: User | null;
   userData: UserData | null = null;
   now: Date = new Date();
-  todoItems: TodoItem[] = [];
-  showAddTodoItemMenu: boolean = false;
+  tasks: Task[] = [];
+  showAddTaskMenu: boolean = false;
 
   constructor(private userService: UserService, private router: Router) {
     this.user = this.userService.firebaseUser;
     this.userData = this.userService.userData;
-    this.todoItems = this.userService.todoItems;
+    this.tasks = this.userService.tasks;
   }
 
   getFormattedDate() {
     return `${format(this.now, 'EEEE,')}\n${format(this.now, 'dd MMMM')}`;
   }
 
-  async toggleItem(todoItemId: string) {
-    this.todoItems = await Promise.all(
-      this.todoItems.map(async (todoItem) => {
-        if (todoItemId === todoItem.id) {
-          todoItem.checked = !todoItem.checked;
-          await updateTodoItem(this.user!.uid, todoItem.id, {
-            checked: todoItem.checked,
+  async toggleItem(taskId: string) {
+    this.tasks = await Promise.all(
+      this.tasks.map(async (task) => {
+        if (taskId === task.id) {
+          task.checked = !task.checked;
+          await updateTask(this.user!.uid, task.id, {
+            checked: task.checked,
           });
         }
-        return todoItem;
+        return task;
       })
     );
   }
@@ -49,7 +49,14 @@ export class DashboardComponent {
     await this.router.navigate(['auth']);
   }
 
-  async toggleShowAddTodoItemMenu() {
-    this.showAddTodoItemMenu = !this.showAddTodoItemMenu;
+  async toggleShowAddTaskMenu() {
+    this.showAddTaskMenu = !this.showAddTaskMenu;
+  }
+
+  async onAdd(task: Omit<Task, 'id'>) {
+    if (this.user) {
+      this.tasks.push(await createTask(this.user.uid, task));
+    }
+    this.showAddTaskMenu = false;
   }
 }

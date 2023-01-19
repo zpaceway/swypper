@@ -5,3 +5,19 @@
 * {
   user-select: none;
 }
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(113, 113, 113);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(53, 53, 53);
+}
